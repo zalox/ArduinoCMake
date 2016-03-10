@@ -27,20 +27,31 @@ set(CMAKE_CXX_FLAGS "${CMAKE_ASM_FLAGS} -Os")
 set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} ${TUNING_FLAGS} -Wall -std=gnu99")
 
 # Find arduino root path
-set(ARDUINO_ROOT_SEARCH_PATHS
-    /usr/share/arduino
-    /opt/local/arduino
-    /opt/arduino
-    /usr/local/share/arduino
-    /Applications/Arduino.app/Contents/Java
-    /Applications/Arduino.app/Contents/Resources/Java
-)
-list(APPEND ARDUINO_ROOT_SEARCH_PATHS ${ARDUINO_ROOT} ${ARDUINO_SDK_PATH})
-unset(ARDUINO_ROOT)
-find_path(ARDUINO_ROOT
-    NAMES lib/version.txt
-    PATHS ${ARDUINO_ROOT_SEARCH_PATHS})
+if(ARDUINO_ROOT)
+    # check if path specified is good
+    find_path(ARDUINO_ROOT_VERIFIED
+        NAMES lib/version.txt
+        PATHS ${ARDUINO_ROOT})
+    if(NOT ARDUINO_ROOT_VERIFIED)
+        unset(ARDUINO_ROOT)
+    endif()
+endif()
 if(NOT ARDUINO_ROOT)
+    # if root is not set, search
+    set(ARDUINO_ROOT_SEARCH_PATHS
+        /usr/share/arduino
+        /opt/local/arduino
+        /opt/arduino
+        /usr/local/share/arduino
+        /Applications/Arduino.app/Contents/Java
+        /Applications/Arduino.app/Contents/Resources/Java
+    )
+    find_path(ARDUINO_ROOT
+        NAMES lib/version.txt
+        PATHS ${ARDUINO_ROOT_SEARCH_PATHS})
+endif()
+if(NOT ARDUINO_ROOT)
+    # Arduino SDK not found
     message(FATAL_ERROR "Could not find Arduino SDK root folder. Set the variable ARDUINO_ROOT in your CMakeList.txt file before including Arduino.cmake")
 endif()
 
