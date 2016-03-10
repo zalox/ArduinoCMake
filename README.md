@@ -27,11 +27,14 @@ You must also set your target executable to depend on the list of Arduino source
 
 where `SOURCES` is a list of your custom source files for your project.
 
-## Compile the example and upload to your arduino
+## Compile the example
 
 	git clone https://github.com/ChisholmKyle/ArduinoCMake.git
 	cd ArduinoCMake && mkdir build && cd build
 	cmake ..
 	make
-	make flash
+	make hex
 
+If you want to upload to your arduino, set the variables in CMakeLists.txt appropriately, run cmake again, and run
+
+	make flash
