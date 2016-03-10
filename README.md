@@ -13,7 +13,7 @@ Required variables to set in your CMakeLists.txt file are
 | ---- | ----- |
 | `FIRMWARE_TARGET` | Your target executable name |
 | `ARDUINO_PROTOCOL` | Bootloader protocol to upload your firmware. Consult the file **hardware/arduino/avr/boards.txt** in your Arduino root folder. Set `ARDUINO_PROTOCOL` to the `upload.protocol` value for your board |
-| `ARDUINO_BOARD` | Name which corresponds to your board variant type. Consult the file **hardware/arduino/avr/boards.txt** in your Arduino root folder. Set `ARDUINO_BOARD` to the `build.variant` value for your board.  |
+| `ARDUINO_VARIANT` | Name which corresponds to your board variant type. Consult the file **hardware/arduino/avr/boards.txt** in your Arduino root folder. Set `ARDUINO_VARIANT` to the `build.variant` value for your board.  |
 | `ARDUINO_MCU` | MCU part definition. Consult the file **hardware/arduino/avr/boards.txt** in your Arduino root folder. Set `ARDUINO_MCU` to the `build.mcu` value for your board. |
 | `ARDUINO_FCPU` | Clock frequency. Consult the file **hardware/arduino/avr/boards.txt** in your Arduino root folder. Set `ARDUINO_FCPU` to the `build.f_cpu` value for your board. |
 | `ARDUINO_UPLOAD_SPEED` | Upload serial baud rate speed to flash your Arduino. The value '115200' is a good choice. |

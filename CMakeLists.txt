@@ -5,13 +5,16 @@ project (ArduinoCMakeExample)
 set(FIRMWARE_TARGET firmware)
 
 # preferably set SDK root folder (see Arduino.cmake for search paths)
-# set(ARDUINO_ROOT "/Applications/Arduino.app/Contents/Java")
+# 	set(ARDUINO_ROOT "/Applications/Arduino.app/Contents/Java")
 
 # arduino settings - consult ${ARDUINO_ROOT}/hardware/arduino/avr/boards.txt
+# alternatively, place these setting in a separate file and use command such as:
+# 	include("${CMAKE_SOURCE_DIR}/scripts/ArduinoUno.cmake")
 set(ARDUINO_PROTOCOL "wiring")
-set(ARDUINO_BOARD "mega")
+set(ARDUINO_VARIANT "mega")
 set(ARDUINO_MCU "atmega2560")
 set(ARDUINO_FCPU "16000000L")
+
 # upload settings
 set(ARDUINO_UPLOAD_SPEED "115200")
 set(ARDUINO_PORT "/dev/tty.usbmodemXXXXXX")
