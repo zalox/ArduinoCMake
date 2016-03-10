@@ -33,11 +33,11 @@ set(ARDUINO_ROOT_SEARCH_PATHS
     /opt/arduino
     /usr/local/share/arduino
     /Applications/Arduino.app/Contents/Java
-    /Applications/Arduino.app/Contents/Resources/Java/
+    /Applications/Arduino.app/Contents/Resources/Java
 )
 find_path(ARDUINO_ROOT
     NAMES lib/version.txt
-    PATHS ${ARDUINO_ROOT} ${ARDUINO_SDK_PATH} ${OPENBLAS_INCLUDE_SEARCH_PATHS})
+    PATHS ${ARDUINO_ROOT} ${ARDUINO_SDK_PATH} ${ARDUINO_ROOT_SEARCH_PATHS})
 if(NOT ARDUINO_ROOT)
     message(FATAL_ERROR "Could not find Arduino SDK root folder. Set the variable ARDUINO_ROOT in your CMakeList.txt file before including Arduino.cmake")
 endif()
