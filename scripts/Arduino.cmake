@@ -93,9 +93,16 @@ if(AVROBJCOPY AND AVRDUDE)
 
     add_custom_target(flash)
     add_dependencies(flash hex)
-    add_custom_command(TARGET flash POST_BUILD
-        COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c${ARDUINO_PROTOCOL}  -P${PORT} -b${ARDUINO_UPLOAD_SPEED} -D -Uflash:w:${FIRMWARE_TARGET}.hex:i
-    )
+
+    if(ARDUINO_PROTOCOL STREQUAL "usbasp")
+        add_custom_command(TARGET flash POST_BUILD
+            COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c usbasp -Uflash:w:firmware.hex:i
+        )
+    else()
+        add_custom_command(TARGET flash POST_BUILD
+            COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c${ARDUINO_PROTOCOL}  -P${PORT} -b${ARDUINO_UPLOAD_SPEED} -D -Uflash:w:${FIRMWARE_TARGET}.hex:i
+        )
+    endif()
 
 endif()
 
