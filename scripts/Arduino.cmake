@@ -10,6 +10,16 @@
 enable_language(ASM)
 
 # set compilers
+find_program(AVR_GCC avr-gcc)
+find_program(AVR_G++ avr-g++)
+
+if (NOT AVR_GCC)
+    message(FATAL_ERROR "Please install avr-gcc")
+endif ()
+if (NOT AVR_G++)
+    message(FATAL_ERROR "Please install avr-g++")
+endif ()
+
 set(CMAKE_ASM_COMPILER avr-gcc)
 set(CMAKE_C_COMPILER avr-gcc)
 set(CMAKE_CXX_COMPILER avr-g++)
