@@ -19,6 +19,9 @@ set(ARDUINO_FCPU "16000000L")
 set(ARDUINO_UPLOAD_SPEED "115200")
 set(ARDUINO_PORT "/dev/tty.usbmodemXXXXXX")
 
+# serial picocom communications
+set(ARDUINO_SERIAL_SPEED "115200")
+
 # arduino cmake script
 include("${CMAKE_SOURCE_DIR}/scripts/Arduino.cmake")
 

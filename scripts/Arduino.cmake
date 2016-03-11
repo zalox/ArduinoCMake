@@ -38,11 +38,13 @@ if(ARDUINO_ROOT)
 endif()
 if(NOT ARDUINO_ROOT)
     # if root is not set, search
-    set(ARDUINO_ROOT_SEARCH_PATHS
-        /usr/share/arduino
-        /opt/local/arduino
-        /opt/arduino
-        /usr/local/share/arduino
+    file(GLOB ARDUINO_ROOT_SEARCH_PATHS
+        /usr/arduino*
+        /usr/local/arduino*
+        /usr/share/arduino*
+        /usr/local/share/arduino*
+        /opt/arduino*
+        /opt/local/arduino*
         /Applications/Arduino.app/Contents/Java
         /Applications/Arduino.app/Contents/Resources/Java
     )
@@ -78,6 +80,7 @@ endif()
 
 find_program(AVROBJCOPY "avr-objcopy")
 find_program(AVRDUDE "avrdude")
+find_program(PICOCOM "picocom")
 
 if(AVROBJCOPY AND AVRDUDE)
     # make sure target is set
@@ -93,7 +96,6 @@ if(AVROBJCOPY AND AVRDUDE)
 
     add_custom_target(flash)
     add_dependencies(flash hex)
-
     if(ARDUINO_PROTOCOL STREQUAL "usbasp")
         add_custom_command(TARGET flash POST_BUILD
             COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c usbasp -Uflash:w:firmware.hex:i
@@ -104,6 +106,13 @@ if(AVROBJCOPY AND AVRDUDE)
         )
     endif()
 
+endif()
+
+if(PICOCOM)
+    add_custom_target(serial)
+    add_custom_command(TARGET serial POST_BUILD
+        COMMAND ${PICOCOM} ${PORT} -b ${ARDUINO_SERIAL_SPEED} -l
+    )
 endif()
 
 add_custom_target(reset)
