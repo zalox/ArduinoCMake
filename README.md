@@ -1,5 +1,5 @@
 # ArduinoCMake
-A simple CMake build project for Arduino
+A simple CMake build project for Arduino. Based on [Arduino-CMake-Template](https://github.com/tmpsantos/Arduino-CMake-Template).
 
 ## Getting Started
 
