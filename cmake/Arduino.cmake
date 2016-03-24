@@ -6,13 +6,13 @@
 # http://www.tmpsantos.com.br/en/2010/12/arduino-uno-ubuntu-cmake/
 # http://forum.arduino.cc/index.php?topic=244741.0
 
-# enable assembler language
-enable_language(ASM)
-
 # set compilers
 set(CMAKE_ASM_COMPILER avr-gcc)
 set(CMAKE_C_COMPILER avr-gcc)
 set(CMAKE_CXX_COMPILER avr-g++)
+
+# enable assembler language
+enable_language(ASM)
 
 # for cross-compilation
 set(CMAKE_SYSTEM_NAME Generic)
@@ -38,11 +38,13 @@ if(ARDUINO_ROOT)
 endif()
 if(NOT ARDUINO_ROOT)
     # if root is not set, search
-    set(ARDUINO_ROOT_SEARCH_PATHS
-        /usr/share/arduino
-        /opt/local/arduino
-        /opt/arduino
-        /usr/local/share/arduino
+    file(GLOB ARDUINO_ROOT_SEARCH_PATHS
+        /usr/arduino*
+        /usr/local/arduino*
+        /usr/share/arduino*
+        /usr/local/share/arduino*
+        /opt/arduino*
+        /opt/local/arduino*
         /Applications/Arduino.app/Contents/Java
         /Applications/Arduino.app/Contents/Resources/Java
     )
@@ -78,6 +80,7 @@ endif()
 
 find_program(AVROBJCOPY "avr-objcopy")
 find_program(AVRDUDE "avrdude")
+find_program(PICOCOM "picocom")
 
 if(AVROBJCOPY AND AVRDUDE)
     # make sure target is set
@@ -93,17 +96,23 @@ if(AVROBJCOPY AND AVRDUDE)
 
     add_custom_target(flash)
     add_dependencies(flash hex)
-
     if(ARDUINO_PROTOCOL STREQUAL "usbasp")
         add_custom_command(TARGET flash POST_BUILD
             COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c usbasp -Uflash:w:firmware.hex:i
         )
     else()
         add_custom_command(TARGET flash POST_BUILD
-            COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c${ARDUINO_PROTOCOL}  -P${PORT} -b${ARDUINO_UPLOAD_SPEED} -D -Uflash:w:${FIRMWARE_TARGET}.hex:i
+            COMMAND ${AVRDUDE} -C${AVRDUDE_CONFIG} -v -p${ARDUINO_MCU} -c${ARDUINO_PROTOCOL} -P${PORT} -b${ARDUINO_UPLOAD_SPEED} -D -Uflash:w:${FIRMWARE_TARGET}.hex:i
         )
     endif()
 
+endif()
+
+if(PICOCOM)
+    add_custom_target(serial)
+    add_custom_command(TARGET serial POST_BUILD
+        COMMAND ${PICOCOM} ${PORT} -b ${ARDUINO_SERIAL_SPEED} -l
+    )
 endif()
 
 add_custom_target(reset)
