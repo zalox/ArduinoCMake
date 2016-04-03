@@ -27,6 +27,7 @@ enable_language(ASM)
 # for cross-compilation
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SHARED_LIBRARY_LINK_CXX_FLAGS "")
+set(CMAKE_CXX_LINK_FLAGS "")
 
 # C only fine tunning
 set(TUNING_FLAGS "-funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums")

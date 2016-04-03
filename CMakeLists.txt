@@ -25,6 +25,9 @@ set(ARDUINO_SERIAL_SPEED "115200")
 # arduino cmake script
 include("${CMAKE_SOURCE_DIR}/cmake/Arduino.cmake")
 
+# optional Wire library to include
+# include("${CMAKE_SOURCE_DIR}/cmake/ArduinoLibraryWire.cmake")
+
 # Include files
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
