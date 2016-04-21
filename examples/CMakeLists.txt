@@ -1,40 +1,21 @@
 cmake_minimum_required (VERSION 2.6)
 project (ArduinoCMakeExample)
 
-# specify target name
-set(FIRMWARE_TARGET firmware)
+set(FIRMWARE_TARGET firmware) # matches add_executable
 
-# preferably set SDK root folder (see Arduino.cmake for search paths)
-# 	set(ARDUINO_ROOT "/Applications/Arduino.app/Contents/Java")
+### Settings
+# set(ARDUINO_ROOT "/Applications/Arduino.app/Contents/Java")
+set(ARDUINO_PORT "/dev/ttyUSB0") #default USB0
+set(ARDUINO_SERIAL_SPEED "115200") # serial picocom communications
 
-# arduino settings - consult ${ARDUINO_ROOT}/hardware/arduino/avr/boards.txt
-# alternatively, place these setting in a separate file and use command such as:
-# 	include("${CMAKE_SOURCE_DIR}/cmake/ArduinoMega2560.cmake")
-set(ARDUINO_PROTOCOL "wiring")
-set(ARDUINO_VARIANT "mega")
-set(ARDUINO_MCU "atmega2560")
-set(ARDUINO_FCPU "16000000L")
-set(ARDUINO_UPLOAD_SPEED "115200")
-
-# upload port
-set(ARDUINO_PORT "/dev/tty.usbmodemXXXXXX")
-
-# serial picocom communications
-set(ARDUINO_SERIAL_SPEED "115200")
-
-# arduino cmake script
-include("${CMAKE_SOURCE_DIR}/cmake/Arduino.cmake")
-
-# optional Wire library to include
-# include("${CMAKE_SOURCE_DIR}/cmake/ArduinoLibraryWire.cmake")
-
-# Include files
-include_directories("${CMAKE_SOURCE_DIR}/include")
-
-# sources
-file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
+# uncomment the correct device
+# To create your own .cmake file look in the message printed from this function:
+# message(${ARDUINO_ROOT}/hardware/arduino/avr/boards.txt) # prints path
+include("${CMAKE_SOURCE_DIR}/ArduinoCMake/cmake/ArduinoUno.cmake")
+# include("${CMAKE_SOURCE_DIR}/ArduinoCMake/cmake/ArduinoMega2560.cmake")
+include("${CMAKE_SOURCE_DIR}/ArduinoCMake/cmake/Arduino.cmake") # finds main library
 
 # target
 add_executable(${FIRMWARE_TARGET}
-	${SOURCES}
+	# your source files
 	${ARDUINO_SOURCE_FILES})
