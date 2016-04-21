@@ -16,7 +16,7 @@ at last, for the serial communication you will need
 
 - picocom
 
-## Usage
+## Configuration
 
 See the `examples/CMakeLists.txt` for basic usage.
 
@@ -42,17 +42,19 @@ variables in your CMakeLists.txt:
 
 
 ## Install	
-bash```
+```bash
+# In your git repository:
 git submodule add https://github.com/zalox/ArduinoCMake.git
+cp ArduinoCMake/examples/CMakeLists.txt ./ 
 ```
 
 ## Usage
-bash```
+```bash
 make flash
 ```
 
-[`picocom`](https://github.com/npat-efault/picocom)
-bash```
+Serial with [`picocom`](https://github.com/npat-efault/picocom)
+
+```bash
 make serial
 ```
-    
